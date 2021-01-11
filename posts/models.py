@@ -6,34 +6,29 @@ User = get_user_model()
 
 
 class Group(models.Model):
-    '''
-    Заголовок,
-    ссылка,
-    описание.
-    '''
-    title = models.CharField(max_length=200, null=False)
-    slug = models.SlugField(unique=True)
-    description = models.TextField(max_length=300)
-    '''
-    Возврат понятного отображения заголовка в панель администрирования
-    '''
+    title = models.CharField(max_length=200, verbose_name="Название группы",
+                             null=False)
+    slug = models.SlugField(verbose_name="Ссылка", unique=True)
+    description = models.TextField(verbose_name="Описание группы",
+                                   max_length=300)
+    '''Возврат понятного отображения заголовка в панель администрирования'''
     def __str__(self):
         return self.title
 
 
 class Post(models.Model):
-    '''
-    Основной текст поста,
-    дата публикации,
-    автор,
-    возможность ссылаться на группу.
-    '''
-    text = models.TextField()
-    pub_date = models.DateTimeField("date published", auto_now_add=True)
+    text = models.TextField(verbose_name="Текст поста")
+    pub_date = models.DateTimeField("Дата публикации", auto_now_add=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE,
+                               verbose_name="Автор поста",
                                related_name="post_author")
     '''
-    Чтобы пост не пропал при удалении группы задаем SET_NULL
+    Возможность в посте ссылаться на группу.
+    Чтобы пост не пропал при удалении группы задаем SET_NULL.
     '''
     group = models.ForeignKey(Group, on_delete=models.SET_NULL,
+                              verbose_name="Тег группы",
                               related_name="posts", blank=True, null=True)
+
+    class Meta:
+        ordering = ["-pub_date"]
