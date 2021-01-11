@@ -4,7 +4,7 @@ from .models import Post, Group
 
 def index(request):
     '''Сортировка по "свежести" постов'''
-    latest = Post.objects[:11]
+    latest = Post.objects.all()[:11]
     return render(request, "index.html", {"posts": latest})
 
 
