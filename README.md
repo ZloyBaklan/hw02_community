@@ -1,4 +1,4 @@
-# backend_community_homework
+# Yatube application (backend_community_homework)
 
 Posts app created and registered.
 The database is connected.
